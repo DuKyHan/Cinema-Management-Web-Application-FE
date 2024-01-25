@@ -8,5 +8,5 @@ RUN yarn build
 
 # production stage
 FROM nginx:1.25.3-alpine as production-stage
-COPY --from=build-stage /app/build /usr/share/nginx/
+COPY --from=build-stage /app/build /usr/share/nginx/html
 CMD ["nginx", "-g", "daemon off;"]
