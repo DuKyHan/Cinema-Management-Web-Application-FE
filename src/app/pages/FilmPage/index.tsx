@@ -220,9 +220,10 @@ export const FilmPage = () => {
                           content: (
                             <>
                               <Typography>
-                                {location &&
-                                cinemaPremiere.location.latitude &&
-                                cinemaPremiere.location.longitude ? (
+                                {location.latitude != null &&
+                                location.longitude != null &&
+                                cinemaPremiere.location.latitude != null &&
+                                cinemaPremiere.location.longitude != null ? (
                                   <Typography sx={{ mb: 2, ml: 3 }}>
                                     {getDistance(
                                       {
