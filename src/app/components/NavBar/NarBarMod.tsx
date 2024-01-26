@@ -149,7 +149,7 @@ export function NavBarMod() {
 
   return (
     <AppBar position="static" color="transparent">
-      <Container maxWidth="xl">
+      <Box mx={3}>
         <Toolbar disableGutters>
           <NavItemHome />
 
@@ -292,7 +292,7 @@ export function NavBarMod() {
             </Menu>
           </Box>
         </Toolbar>
-      </Container>
+      </Box>
     </AppBar>
   );
 }

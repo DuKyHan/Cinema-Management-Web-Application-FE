@@ -29,7 +29,6 @@ export const LatestNewsSection = () => {
       <Grid item xs={12}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography variant="h5">Latest news</Typography>
-          <Button>See more</Button>
         </Box>
       </Grid>
       {news.slice(0, 4).map((news, i) => {

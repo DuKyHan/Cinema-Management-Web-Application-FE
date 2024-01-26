@@ -28,7 +28,6 @@ export const PopularNewsSection = () => {
       <Grid item xs={12}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography variant="h5">Popular</Typography>
-          <Button>See more</Button>
         </Box>
       </Grid>
       {popularNews.slice(0, 3).map((news, i) => {

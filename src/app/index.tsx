@@ -118,11 +118,12 @@ const MainLayout = props => {
           <Route path={AppRoute.Home} element={<HomePage />} />
           <Route path={AppRoute.FilmList} element={<FilmListPage />} />
           <Route path={AppRoute.Film} element={<FilmPage />} />
+          <Route path={AppRoute.NewsList} element={<NewsListPage />} />
           <Route element={<RequireAuthRoute />}>
             <Route path={AppRoute.Profile} element={<ProfilePage />} />
             <Route path={AppRoute.ProfileEdit} element={<ProfileEditPage />} />
             <Route path={AppRoute.Chat} element={<ChatPage />} />
-            <Route path={AppRoute.NewsList} element={<NewsListPage />} />
+
             <Route path={AppRoute.News} element={<NewsPage />} />
             <Route path={AppRoute.Cinema} element={<CinemaPage />} />
             <Route

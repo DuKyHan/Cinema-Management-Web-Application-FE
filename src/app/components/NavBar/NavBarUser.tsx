@@ -138,7 +138,7 @@ export function NavBarUser() {
     <AuthContext.Consumer>
       {({ handleLogout }) => (
         <AppBar position="static" color="transparent">
-          <Container maxWidth="xl">
+          <Box mx={3}>
             <Toolbar disableGutters>
               <Link
                 to={AppRoute.Home}
@@ -346,7 +346,7 @@ export function NavBarUser() {
                 </Menu>
               </Box>
             </Toolbar>
-          </Container>
+          </Box>
         </AppBar>
       )}
     </AuthContext.Consumer>

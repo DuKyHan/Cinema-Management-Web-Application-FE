@@ -137,7 +137,7 @@ export function NavBarAdmin() {
 
   return (
     <AppBar position="static" color="transparent">
-      <Container maxWidth="xl">
+      <Box mx={3}>
         <Toolbar disableGutters>
           <NavItemHome />
 
@@ -300,7 +300,7 @@ export function NavBarAdmin() {
             </Menu>
           </Box>
         </Toolbar>
-      </Container>
+      </Box>
     </AppBar>
   );
 }
