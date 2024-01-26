@@ -120,15 +120,16 @@ export const ProfileEditPage = () => {
           onConfirm: async () => {
             try {
               setDialogLoading(true);
+              const phoneNumber = value.phoneNumber.toString();
               const newProfile: any = {
-                ...profile,
+                ...value,
                 dateOfBirth: value.dateOfBirth.toDate(),
                 phoneNumber:
-                  value.phoneNumber === '+84'
+                  phoneNumber === ''
                     ? null
-                    : value.phoneNumber.startsWith('+84')
-                    ? value.phoneNumber
-                    : `+84${value.phoneNumber}`,
+                    : phoneNumber.startsWith('+84')
+                    ? phoneNumber
+                    : `+84${phoneNumber}`,
                 interestedGenres: value.interestedGenres.map(g => g.id),
               };
               const res = await updateProfile(newProfile, imageFile);
@@ -136,8 +137,8 @@ export const ProfileEditPage = () => {
               setCurrentProfile(res.data.data);
               navigate(AppRoute.Profile);
             } catch (error) {
-              console.log(JSON.stringify(error));
-              showErrorSnackbar(error.response.data.error.details);
+              console.log(error);
+              //showErrorSnackbar(error.response.data.error.details);
             } finally {
             }
           },
