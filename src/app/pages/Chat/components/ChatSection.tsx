@@ -107,7 +107,7 @@ export const ChatSection = (props: {
         />
         <Box ref={scrollToRef} />
         <IconButton
-          color={message.length > 0 ? 'primary' : undefined}
+          disabled={message.trim().length === 0}
           onClick={() => {
             sendMessage(socket, { chatId: chat.id, message }).then(res => {
               console.log(res);

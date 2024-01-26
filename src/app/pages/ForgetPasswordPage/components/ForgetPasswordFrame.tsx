@@ -1,55 +1,49 @@
-import { CancelOutlined } from '@mui/icons-material';
-import {
-  Box,
-  Button,
-  FormControl,
-  FormHelperText,
-  Grid,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  Typography,
-} from '@mui/material';
-import { useState } from 'react';
+import { Box, Button, Grid, Typography } from '@mui/material';
+import { useGlobalSnackbar } from 'app/context/GlobalSnackbarContext';
+import { resetPassword } from 'app/services/auth';
+import { useEffect, useState } from 'react';
+import { FormContainer, TextFieldElement } from 'react-hook-form-mui';
 import { useNavigate } from 'react-router-dom';
-import { forgetPassword } from '../services/forgetpassword';
-import { AppRoute } from 'app/routes';
-import { ErrorSnackbar } from 'app/components/Snackbar/ErrorSnackbar';
-export const ForgetPasswordFrame = () => {
-  const [email, setEmail] = useState('');
-  const [error, setError] = useState('');
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('Register failed');
+import { requestResetPassword } from '../services/forgetpassword';
+
+export const ForgetPasswordFrame = (props: { email: string }) => {
+  const { email } = props;
+  const [hasSent, setHasSent] = useState(false);
+  const [timeLeft, setTimeLeft] = useState<number | null>(null);
+
+  const { showSuccessSnackbar, showErrorSnackbar } = useGlobalSnackbar();
+
   const navigate = useNavigate();
-  let success = true;
-  const handleSubmit = () => {
-    let errorTemp = '';
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email) {
-      errorTemp = 'Please enter an email.';
-      success = false;
-    } else if (!emailRegex.test(email)) {
-      errorTemp = 'Invalid email format.';
-      success = false;
-    }
-    if (!success) {
-      setError(errorTemp);
-      return;
-    }
-    forgetPassword(email)
+
+  const handleSendVerificationToken = () => {
+    requestResetPassword(email)
       .then(res => {
-        navigate(AppRoute.EnterForgetPassword);
+        showSuccessSnackbar('Code is sent!');
+        setTimeLeft(30);
       })
       .catch(err => {
-        setOpenSnackbar(true);
-        setSnackbarMessage(err.response.data.error.details);
+        console.log(err);
+        showErrorSnackbar(err.response.data.error.details);
       });
   };
+
+  useEffect(() => {
+    if (timeLeft == null) {
+      return;
+    }
+    if (timeLeft > 0) {
+      setTimeout(() => {
+        setTimeLeft(timeLeft - 1);
+      }, 1000);
+    } else {
+      setTimeLeft(null);
+    }
+  }, [timeLeft]);
+
   return (
     <Grid
       item
-      xs={7}
+      xs={6}
       height={'80vh'}
       sx={{
         display: 'flex',
@@ -58,7 +52,6 @@ export const ForgetPasswordFrame = () => {
         justifyContent: 'center',
       }}
     >
-      <ErrorSnackbar message={snackbarMessage} open={openSnackbar} />
       <Box
         my={6}
         p={2}
@@ -72,40 +65,119 @@ export const ForgetPasswordFrame = () => {
         }}
       >
         <Typography variant="h5" color={'primary'} fontWeight={'bold'} mb={4}>
-          Forget Password
+          Reset your password
         </Typography>
         <Typography
           variant="h6"
           color={'primary'}
           fontWeight={'bold'}
-          sx={{ marginBottom: 4 }}
-        ></Typography>
-        <Typography
-          sx={{ fontSize: '20' }}
-          color={'primary'}
-          fontWeight={'bold'}
-          alignSelf={'start'}
-          mt={14}
-          ml={1}
+          textAlign="center"
         >
-          Please enter your email
+          Enter 6-digit code sent to {email} and new password
         </Typography>
-        <Box>
-          <FormControl fullWidth sx={{ my: 1 }} variant="outlined">
+
+        <Box sx={{ mt: 2 }}>
+          <FormContainer
+            onSuccess={data => {
+              resetPassword({
+                token: data.token.toString(),
+                email: email,
+                password: data.password,
+              })
+                .then(res => {
+                  showSuccessSnackbar('Password is reset!');
+                  navigate('/login');
+                })
+                .catch(err => {
+                  showErrorSnackbar(err.response.data.error.details);
+                });
+            }}
+          >
+            <TextFieldElement
+              fullWidth
+              name="token"
+              type="number"
+              label="6-digit code"
+              required
+              sx={{ my: 2 }}
+              inputProps={{
+                maxLength: 6,
+                min: 0,
+                max: 6,
+              }}
+              transform={{
+                input: value => {
+                  if (value == null || value === '') {
+                    return null;
+                  }
+                  const v = value.toString().replace(/\D/g, '');
+                  return parseInt(v.slice(0, 6));
+                },
+              }}
+            />
+            <TextFieldElement
+              fullWidth
+              name="password"
+              type={'password'}
+              label="New password"
+              required
+              sx={{ my: 2 }}
+              validation={{
+                validate: (value, formValues) => {
+                  if (value === '') {
+                    return 'Password is required';
+                  }
+                  if (value.length < 6) {
+                    return 'Password must be at least 8 characters';
+                  }
+                  if (value !== formValues.repassword) {
+                    return 'Passwords do not match';
+                  }
+                  return true;
+                },
+              }}
+            />
+            <TextFieldElement
+              fullWidth
+              type={'password'}
+              name="repassword"
+              label="Retype new password"
+              required
+              sx={{ my: 2 }}
+            />
+            <Button
+              fullWidth
+              disabled={timeLeft != null}
+              variant="outlined"
+              sx={{ mt: 6 }}
+              onClick={async () => {
+                handleSendVerificationToken();
+              }}
+            >
+              Send OTP {timeLeft != null ? `(${timeLeft})` : null}
+            </Button>
+            <Button fullWidth type="submit" variant="contained" sx={{ mt: 1 }}>
+              Confirm
+            </Button>
+          </FormContainer>
+
+          {/* <FormControl fullWidth sx={{ my: 1 }} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">
-              Your email
+              6-digit code
             </InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
-              value={email}
+              value={bits}
               onChange={e => {
-                setEmail(e.target.value);
+                const value = e.target.value.replace(/\D/g, '');
+                const truncatedValue = value.slice(0, 6);
+                setBits(truncatedValue);
               }}
               endAdornment={
                 <InputAdornment
                   position="end"
                   onClick={() => {
-                    setEmail('');
+                    setBits('');
                   }}
                 >
                   <IconButton
@@ -118,22 +190,65 @@ export const ForgetPasswordFrame = () => {
               }
               label="6-digit code"
             />
-            {error ? (
-              <FormHelperText sx={{ color: 'red' }}>{error}</FormHelperText>
-            ) : (
-              <FormHelperText>Type your email</FormHelperText>
-            )}
           </FormControl>
+          <FormControl fullWidth sx={{ my: 1 }} variant="outlined">
+            <InputLabel htmlFor="outlined-adornment-password">
+              New password
+            </InputLabel>
+            <FormHelperText error>{errorPassword}</FormHelperText>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              value={password}
+              onChange={e => {
+                setPassword(e.target.value);
+              }}
+              endAdornment={
+                <InputAdornment
+                  position="end"
+                  onClick={() => {
+                    setPassword('');
+                  }}
+                >
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    edge="end"
+                  >
+                    <CancelOutlined />
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="New password"
+            />
+          </FormControl>
+          <FormControl fullWidth sx={{ my: 1 }} variant="outlined">
+            <InputLabel htmlFor="outlined-adornment-password">
+              Retype new password
+            </InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              value={rePassword}
+              onChange={e => {
+                setRePassword(e.target.value);
+              }}
+              endAdornment={
+                <InputAdornment
+                  position="end"
+                  onClick={() => {
+                    setRePassword('');
+                  }}
+                >
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    edge="end"
+                  >
+                    <CancelOutlined />
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Retype new password"
+            />
+          </FormControl> */}
         </Box>
-
-        <Button
-          fullWidth
-          variant="contained"
-          sx={{ mt: 20 }}
-          onClick={handleSubmit}
-        >
-          Send recovery code
-        </Button>
       </Box>
     </Grid>
   );

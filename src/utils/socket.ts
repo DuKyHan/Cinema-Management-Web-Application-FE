@@ -1,7 +1,7 @@
 import { io } from 'socket.io-client';
 
-export const BASE_SOCKET_URL = 'ws://localhost:3000';
-
+// export const BASE_SOCKET_URL = 'ws://localhost:3000';
+export const BASE_SOCKET_URL = 'ws://128.199.251.131:3000';
 export const socket = io(BASE_SOCKET_URL, {
   transports: ['websocket'],
   autoConnect: false,

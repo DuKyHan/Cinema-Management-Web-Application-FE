@@ -61,10 +61,10 @@ export const AdminCinemaListPage = () => {
 
   const reloadCinemas = useCallback(() => {
     getCinemas({
+      ...query,
       limit: paginationModel.pageSize,
       offset: paginationModel.pageSize * paginationModel.page,
       search: search.length > 0 ? search : undefined,
-      ...query,
     }).then(res => {
       setData(res.data.data);
       setIsLoadingData(false);

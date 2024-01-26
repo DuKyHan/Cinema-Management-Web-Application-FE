@@ -96,16 +96,10 @@ export const GlobalDialogProvider = ({
   };
 
   const resetDialog = () => {
-    setDialogTitle('');
-    setDialogDescription('');
-    setDialogContent(null);
     setDialogOnConfirm(null);
     setDialogOnCancel(null);
     setIsDialogOpened(false);
     setIsDialogLoading(false);
-    setDialogMaxWidth(false);
-    setDialogFullWidth(false);
-    setDisableBackdropClick(false);
   };
 
   const closeDialog = () => {

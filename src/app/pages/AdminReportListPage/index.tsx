@@ -58,12 +58,12 @@ export const AdminReportListPage = () => {
 
   const reloadReports = useCallback(() => {
     getReports({
+      ...query,
       limit: paginationModel.pageSize,
       offset: paginationModel.pageSize * paginationModel.page,
       name: search.length > 0 ? search : undefined,
       include: getReportQueryIncludes,
       sort: GetReportQuerySort.updatedAtDesc,
-      ...query,
     }).then(res => {
       console.log(res.data.data);
       setData(res.data.data);

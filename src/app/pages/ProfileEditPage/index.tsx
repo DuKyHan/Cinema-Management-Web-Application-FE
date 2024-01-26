@@ -123,9 +123,12 @@ export const ProfileEditPage = () => {
               const newProfile: any = {
                 ...profile,
                 dateOfBirth: value.dateOfBirth.toDate(),
-                phoneNumber: value.phoneNumber.startsWith('+84')
-                  ? value.phoneNumber
-                  : `+84${value.phoneNumber}`,
+                phoneNumber:
+                  value.phoneNumber === '+84'
+                    ? null
+                    : value.phoneNumber.startsWith('+84')
+                    ? value.phoneNumber
+                    : `+84${value.phoneNumber}`,
                 interestedGenres: value.interestedGenres.map(g => g.id),
               };
               const res = await updateProfile(newProfile, imageFile);

@@ -60,10 +60,10 @@ export const AdminAccountListPage = () => {
 
   const reloadAccounts = useCallback(() => {
     getAccounts({
+      ...query,
       limit: paginationModel.pageSize,
       offset: paginationModel.pageSize * paginationModel.page,
       search: search.length > 0 ? search : undefined,
-      ...query,
     }).then(res => {
       setData(res.data.data);
       setIsLoadingData(false);

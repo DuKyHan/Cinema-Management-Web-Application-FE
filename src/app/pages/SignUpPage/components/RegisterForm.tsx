@@ -5,6 +5,7 @@ import {
   FormControl,
   FormHelperText,
   Grid,
+  Stack,
   IconButton,
   InputAdornment,
   InputLabel,
@@ -97,7 +98,7 @@ export const RegisterForm = props => {
         }}
       >
         <Typography variant="h5" color={'primary'} fontWeight={'bold'} mb={4}>
-          Đăng ký
+          Sign up
         </Typography>
         <Box>
           <FormControl fullWidth sx={{ my: 1 }} variant="outlined">
@@ -210,19 +211,35 @@ export const RegisterForm = props => {
           </FormControl>
         </Box>
 
-        <Button
-          variant="contained"
-          sx={{
-            my: 4,
-            borderRadius: '15px',
-            pl: 4,
-            pr: 4,
-            textTransform: 'none',
-          }}
-          onClick={handleSubmit}
-        >
-          Tạo tài khoản
-        </Button>
+        <Stack direction="row">
+          <Button
+            sx={{
+              my: 4,
+              borderRadius: '15px',
+              pl: 4,
+              pr: 4,
+              textTransform: 'none',
+            }}
+            onClick={() => {
+              navigate(AppRoute.Login);
+            }}
+          >
+            Back
+          </Button>
+          <Button
+            variant="contained"
+            sx={{
+              my: 4,
+              borderRadius: '15px',
+              pl: 4,
+              pr: 4,
+              textTransform: 'none',
+            }}
+            onClick={handleSubmit}
+          >
+            Create account
+          </Button>
+        </Stack>
       </Box>
     </Grid>
   );

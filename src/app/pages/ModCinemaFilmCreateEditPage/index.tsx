@@ -4,6 +4,7 @@ import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { Loading } from 'app/components/Loading/Loading';
 import { PricingRoomElement } from 'app/components/RoomElement/PricingRoomElement';
+import { useAuth } from 'app/context/AuthContext';
 import { useGlobalDialogContext } from 'app/context/GlobalDialogContext';
 import { useGlobalSnackbar } from 'app/context/GlobalSnackbarContext';
 import { AppRoute } from 'app/routes';
@@ -24,7 +25,7 @@ import {
   SelectElement,
 } from 'react-hook-form-mui';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Cinema } from 'types/cinema';
+import { Cinema, CinemaStatus } from 'types/cinema';
 import { CinemaFilm, cinemaFilmIncludes } from 'types/cinema-film';
 import { CreateCinemaFilmSeat } from 'types/cinema-film-seat';
 import { EditMode } from 'types/edit-mode';
@@ -33,6 +34,7 @@ import { Room } from 'types/room';
 import { SeatStatus } from 'types/seat';
 
 export const ModCinemaFilmCreateEditPage = (props: { mode: EditMode }) => {
+  const { account } = useAuth();
   const { mode } = props;
   const navigate = useNavigate();
   const { cinemaFilmId } = useParams();
@@ -90,7 +92,10 @@ export const ModCinemaFilmCreateEditPage = (props: { mode: EditMode }) => {
   }, [cinemaFilmId]);
 
   useEffect(() => {
-    getCinemas().then(res => {
+    getCinemas({
+      ownerId: account?.id,
+      status: CinemaStatus.Verified,
+    }).then(res => {
       setCinemas(res.data.data);
       setIsCinemaLoading(false);
     });
@@ -103,7 +108,7 @@ export const ModCinemaFilmCreateEditPage = (props: { mode: EditMode }) => {
     //   setFilms(res.data.data);
     //   setIsFilmLoading(false);
     // });
-  }, []);
+  }, [account?.id]);
 
   useEffect(() => {
     if (selectedCinemaId != null) {

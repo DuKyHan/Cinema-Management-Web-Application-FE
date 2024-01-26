@@ -13,6 +13,7 @@ export const Interests = (props: { genres: string[] }) => {
         sx={{
           display: 'flex',
           gap: 2,
+          flexWrap: 'wrap',
         }}
       >
         {genres.length > 0 ? (

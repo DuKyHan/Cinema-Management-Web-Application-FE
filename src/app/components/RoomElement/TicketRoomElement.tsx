@@ -33,9 +33,17 @@ export const TicketRoomElement = (props: {
 
   return (
     <Box sx={{ width: BOX_SIZE * width, position: 'relative' }}>
-      <Stack direction={'row'} justifyContent="center" alignItems={'center'}>
+      <Stack
+        direction={'row'}
+        justifyContent="center"
+        alignItems={'center'}
+        sx={{ my: 1 }}
+      >
         <SetSeatStatusButton color="green" name="Selected" />
+        <SetSeatStatusButton color="red" name="Occupied" />
         <SetSeatStatusButton color="white" name="Available" />
+      </Stack>
+      <Stack direction={'row'} justifyContent="center" alignItems={'center'}>
         <SetSeatStatusButton color="gray" name="Unavailable" />
         <SetSeatStatusButton
           color="white"

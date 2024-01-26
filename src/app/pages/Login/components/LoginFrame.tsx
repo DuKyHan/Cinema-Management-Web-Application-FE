@@ -185,30 +185,13 @@ export const LoginFrame = () => {
                   alignItems: 'center',
                 }}
               >
-                <FormControlLabel
-                  control={<Checkbox checked={rememberMe} />}
-                  label="Nhớ mật khẩu"
-                  onClick={() => {
-                    if (!rememberMe) {
-                      localStorage.setItem('email', User.email);
-                      localStorage.setItem('password', User.password);
-                      localStorage.setItem('rememberMe', rememberMe.toString());
-                    } else {
-                      // Clear saved credentials if "Remember Me" is not checked
-                      localStorage.removeItem('email');
-                      localStorage.removeItem('password');
-                      localStorage.removeItem('rememberMe');
-                    }
-                    setRememberMe(!rememberMe);
-                  }}
-                />
                 <Button
                   sx={{ my: 1 }}
                   onClick={() => {
                     navigate(AppRoute.ForgetPassword);
                   }}
                 >
-                  Quên mật khẩu?
+                  Forgot password?
                 </Button>
               </Box>
 

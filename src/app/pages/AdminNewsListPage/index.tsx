@@ -52,10 +52,10 @@ export const AdminNewsListPage = () => {
 
   const reloadNews = useCallback(() => {
     getNews({
+      ...query,
       limit: paginationModel.pageSize,
       offset: paginationModel.pageSize * paginationModel.page,
       search: search.length > 0 ? search : undefined,
-      ...query,
     }).then(res => {
       setData(res.data.data);
       console.log(res.data);
