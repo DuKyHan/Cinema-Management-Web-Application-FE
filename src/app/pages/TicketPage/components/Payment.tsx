@@ -103,7 +103,7 @@ export const Payment = (props: {
             <PayPalScriptProvider
               options={{
                 clientId:
-                  'AdhLPz-qEE7jufi47b1e5Pcc38CAeOgeWQ0LPHEd8bTO8PyhIs8AtAoDqVmaMLW25luDaZS4P9Z0112J',
+                  'ASjA7xtnwCXuCSpkWO_MRPpmXPN9Jiq0m6mIERgzim87pag-rTx3L00s2mIVgo9qAmJcOdZjA3_RuWg-',
                 components: 'buttons',
                 currency: 'USD',
                 buyerCountry: 'VN',
