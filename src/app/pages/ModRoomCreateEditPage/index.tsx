@@ -110,6 +110,10 @@ export const ModRoomCreateEditPage = (props: { editMode?: EditMode }) => {
             inputProps={{ min: 1, max: 50 }}
             value={roomWidth}
             onChange={e => {
+              if (e.target.value.trim() === '') {
+                setRoomWidth(null);
+                return;
+              }
               let value = parseInt(e.target.value);
               value = Math.min(value, 50);
               value = Math.max(value, 1);
@@ -125,6 +129,10 @@ export const ModRoomCreateEditPage = (props: { editMode?: EditMode }) => {
             inputProps={{ min: 1, max: 26 }}
             value={roomHeight}
             onChange={e => {
+              if (e.target.value.trim() === '') {
+                setRoomHeight(null);
+                return;
+              }
               let value = parseInt(e.target.value);
               value = Math.min(value, 26);
               value = Math.max(value, 1);
@@ -136,6 +144,8 @@ export const ModRoomCreateEditPage = (props: { editMode?: EditMode }) => {
       </Grid>
       {roomWidth != null && roomHeight != null ? (
         <EditableRoomElement
+          // Rerendering the component when the room's width and height change
+          key={`${roomWidth}-${roomHeight}`}
           onChange={seats => {
             setSeats(seats);
           }}
