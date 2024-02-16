@@ -167,6 +167,8 @@ export const FilmPage = () => {
             Cinemas
           </Typography>
           {cinemaPremieres.map((cinemaPremiere, index) => {
+            const cinemaLocation = cinemaPremiere.location;
+
             return (
               <Accordion key={index}>
                 <AccordionSummary expandIcon={<ExpandMore />}>
@@ -206,12 +208,16 @@ export const FilmPage = () => {
                     </Stack>
                     <Button
                       disabled={
-                        cinemaPremiere.location.latitude == null ||
-                        cinemaPremiere.location.longitude == null
+                        cinemaLocation?.latitude == null ||
+                        cinemaLocation.longitude == null
                       }
                       variant="outlined"
                       startIcon={<LocationOn />}
                       onClick={() => {
+                        if (cinemaLocation == null) {
+                          return;
+                        }
+
                         showRawDialog({
                           disableBackdropClick: true,
                           fullWidth: true,
@@ -222,15 +228,13 @@ export const FilmPage = () => {
                               <Typography>
                                 {location.latitude != null &&
                                 location.longitude != null &&
-                                cinemaPremiere.location.latitude != null &&
-                                cinemaPremiere.location.longitude != null ? (
+                                cinemaLocation.latitude != null &&
+                                cinemaLocation.longitude != null ? (
                                   <Typography sx={{ mb: 2, ml: 3 }}>
                                     {getDistance(
                                       {
-                                        latitude:
-                                          cinemaPremiere.location.latitude!,
-                                        longitude:
-                                          cinemaPremiere.location.longitude!,
+                                        latitude: cinemaLocation.latitude!,
+                                        longitude: cinemaLocation.longitude!,
                                       },
                                       {
                                         latitude: location.latitude!,
@@ -248,16 +252,16 @@ export const FilmPage = () => {
                                   <Map
                                     zoom={17}
                                     center={{
-                                      lat: cinemaPremiere.location.latitude!,
-                                      lng: cinemaPremiere.location.longitude!,
+                                      lat: cinemaLocation.latitude!,
+                                      lng: cinemaLocation.longitude!,
                                     }}
                                     gestureHandling={'greedy'}
                                     disableDefaultUI={true}
                                   >
                                     <Marker
                                       position={{
-                                        lat: cinemaPremiere.location.latitude!,
-                                        lng: cinemaPremiere.location.longitude!,
+                                        lat: cinemaLocation.latitude!,
+                                        lng: cinemaLocation.longitude!,
                                       }}
                                     />
                                   </Map>
