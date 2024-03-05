@@ -98,7 +98,7 @@ export const AdminFilmRevenueAnalyticsPage = () => {
                 })),
               },
             ]}
-            width={600}
+            width={700}
             height={300}
             margin={{ top: 30, bottom: 30 }}
           />
@@ -119,9 +119,9 @@ export const AdminFilmRevenueAnalyticsPage = () => {
                 ],
               },
             ]}
-            width={600}
+            width={700}
             height={300}
-            margin={{ top: 30, bottom: 30 }}
+            margin={{ top: 30, bottom: 30}}
           />
           <Typography fontWeight={'bold'}>Screening</Typography>
         </Box>
