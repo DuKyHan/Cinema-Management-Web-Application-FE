@@ -98,7 +98,7 @@ export const Payment = (props: {
               Food price: {foodPrice} VND
             </Typography>
             <Typography fontWeight={'bold'}>
-              Total price: {foodPrice + selectedSeat!.cinemaFilmSeat.price} VND
+              Total price: {totalPrice} VND
             </Typography>
             <PayPalScriptProvider
               options={{

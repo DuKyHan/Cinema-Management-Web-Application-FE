@@ -28,6 +28,7 @@ import { AdminAccountListPage } from './pages/AdminAccountListPage';
 import { AdminCinemaListPage } from './pages/AdminCinemaListPage';
 import { AdminFilmCreateEditPage } from './pages/AdminFilmCreateEditPage';
 import { AdminFilmListPage } from './pages/AdminFilmListPage';
+import { AdminFilmRevenueAnalyticsPage } from './pages/AdminFilmRevenueAnalyticsPage';
 import { AdminNewsListPage } from './pages/AdminNewsListPage';
 import { AdminReportListPage } from './pages/AdminReportListPage';
 import { ChatPage } from './pages/Chat';
@@ -214,6 +215,10 @@ const MainLayout = props => {
               <Route
                 path={AppRoute.AdminFilmEdit}
                 element={<AdminFilmCreateEditPage mode={EditMode.Edit} />}
+              />
+              <Route
+                path={AppRoute.AdminFilmRevenueAnalytics}
+                element={<AdminFilmRevenueAnalyticsPage />}
               />
               <Route
                 path={AppRoute.AdminCinemaList}

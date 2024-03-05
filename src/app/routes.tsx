@@ -39,6 +39,7 @@ export enum AppRoute {
   AdminFilmList = '/admin/films',
   AdminFilmCreate = '/admin/films/create',
   AdminFilmEdit = '/admin/films/edit/:filmId',
+  AdminFilmRevenueAnalytics = '/admin/films/:filmId/revenue-analytics',
   AdminCinemaList = '/admin/cinemas',
   AdminFoodList = '/admin/foods',
   AdminNewsList = '/admin/news',

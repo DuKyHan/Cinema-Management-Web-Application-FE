@@ -1,5 +1,6 @@
 import { Button, Typography } from '@mui/material';
 import { Loading } from 'app/components/Loading/Loading';
+import { useAuth } from 'app/context/AuthContext';
 import { useGlobalDialogContext } from 'app/context/GlobalDialogContext';
 import { useGlobalSnackbar } from 'app/context/GlobalSnackbarContext';
 import { AppRoute } from 'app/routes';
@@ -18,6 +19,7 @@ import { Food } from 'types/food';
 
 export const ModFoodCreateEditPage = (props: { mode?: EditMode }) => {
   const { mode } = props;
+  const { account } = useAuth();
 
   const { foodId } = useParams();
   const navigate = useNavigate();
@@ -40,11 +42,13 @@ export const ModFoodCreateEditPage = (props: { mode?: EditMode }) => {
     } else {
       setIsLoadingData(false);
     }
-    getCinemas().then(res => {
+    getCinemas({
+      ownerId: account?.id,
+    }).then(res => {
       setCinemas(res.data.data);
       setIsLoadingCinema(false);
     });
-  }, [foodId]);
+  }, [foodId, account?.id]);
 
   if (isLoadingData || isLoadingCinema) {
     return <Loading />;

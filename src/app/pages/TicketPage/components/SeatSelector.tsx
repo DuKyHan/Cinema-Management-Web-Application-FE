@@ -25,7 +25,7 @@ export const SeatSelector = (props: {
     useState<SeatData | null>(selectedSeat);
 
   return (
-    <Stack direction={'row'} gap={6} justifyContent="center" mt={6}>
+    <Stack direction={'row'} spacing={24} justifyContent="center" mt={6}>
       <TicketRoomElement
         room={cinemaFilm.room!}
         cinemaFilmSeats={cinemaFilm.cinemaFilmSeats!}

@@ -1,4 +1,4 @@
-import { Add, Delete, Edit, Search } from '@mui/icons-material';
+import { Add, Delete, Edit, PieChart, Search } from '@mui/icons-material';
 import {
   Box,
   Button,
@@ -116,6 +116,17 @@ export function AdminFilmListPage() {
             headerName: 'Actions',
             cellClassName: 'actions',
             getActions: params => [
+              <GridActionsCellItem
+                icon={<PieChart />}
+                label="Revenue analytics"
+                onClick={() => {
+                  navigate(
+                    replaceRouteParams(AppRoute.AdminFilmRevenueAnalytics, {
+                      filmId: params.id.toString(),
+                    }),
+                  );
+                }}
+              />,
               <GridActionsCellItem
                 icon={<Edit />}
                 label="Edit"

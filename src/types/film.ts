@@ -28,3 +28,15 @@ export class ExtendedFilmPremiere extends Film {
   }[];
   cinemas: Cinema[];
 }
+
+export class FilmRevenueGroupByCinema {
+  id: number;
+  name: string;
+  revenue: number;
+}
+
+export class FilmScreeningsGroupByCinema {
+  id: number;
+  name: string;
+  screenings: number;
+}

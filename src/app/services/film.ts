@@ -84,3 +84,19 @@ export const updateFilm = async (
 export const deleteFilm = (id: number) => {
   return authAxiosInstance.delete(`/films/${id}`);
 };
+
+export const getFilmRevenue = (id: number | string) => {
+  return authAxiosInstance.get(`/films/${id}/revenue`);
+};
+
+export const getFilmScreenings = (id: number | string) => {
+  return authAxiosInstance.get(`/films/${id}/screenings`);
+};
+
+export const getFilmRevenueByCinema = (id: number | string) => {
+  return authAxiosInstance.get(`/films/${id}/revenue-by-cinema`);
+};
+
+export const getFilmScreeningsByCinema = (id: number | string) => {
+  return authAxiosInstance.get(`/films/${id}/screenings-by-cinema`);
+};

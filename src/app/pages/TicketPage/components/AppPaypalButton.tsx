@@ -29,7 +29,7 @@ export const AppPaypalButton = (props: {
             purchase_units: [
               {
                 amount: {
-                  value: `${Math.trunc(totalPrice / 24520)}`,
+                  value: `${(totalPrice / 24520).toPrecision(2)}`,
                   currency_code: 'USD',
                 },
               },
