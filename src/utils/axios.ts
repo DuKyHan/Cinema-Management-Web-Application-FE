@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-//export const BASE_URL = 'http://128.199.251.131:3000/api/v1';
-export const BASE_URL = 'http://localhost:3000/api/v1';
+export const BASE_URL = 'http://128.199.251.131:3000/api/v1';
+// export const BASE_URL = 'http://localhost:3000/api/v1';
 
 export const rawAxiosInstance = axios.create({
   baseURL: BASE_URL,
