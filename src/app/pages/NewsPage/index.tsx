@@ -9,18 +9,19 @@ import {
 } from '@mui/material';
 import { Loading } from 'app/components/Loading/Loading';
 import {
+  NewsSort,
   getNews,
   getNewsById,
   newsIncludes,
-  NewsSort,
   readNews,
 } from 'app/services/news';
 import NewsPlaceholder from 'assets/images/news-placeholder.png';
 import dayjs from 'dayjs';
+import parse from 'html-react-parser';
 import Image from 'mui-image';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { News } from 'types/news';
+import { News, NewsContentFormat } from 'types/news';
 import { getImageUrl, getImageUrlOrDefault } from 'utils/get-image-url';
 import { getProfileDisplayNameOrDefault } from 'utils/profile';
 import { NewsCard } from '../NewsListPage/components/NewsCard';
@@ -104,9 +105,13 @@ export const NewsPage = () => {
             showLoading
           />
         </Box>
-        <Typography variant="body1" sx={{ whiteSpace: 'pre-line' }}>
-          {news.content}
-        </Typography>
+        {news.contentFormat === NewsContentFormat.Delta ? (
+          parse(news.content)
+        ) : (
+          <Typography variant="body1" sx={{ whiteSpace: 'pre-line' }}>
+            {news.content}
+          </Typography>
+        )}
       </Grid>
       <Grid item xs={3}>
         <Typography variant="h5" sx={{ my: 2 }}>

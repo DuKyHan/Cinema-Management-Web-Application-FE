@@ -1,6 +1,7 @@
 import { Box, Button, Grid, Stack, Typography } from '@mui/material';
 import { ImageSelector } from 'app/components/ImageSelector';
 import { Loading } from 'app/components/Loading/Loading';
+import { QuillEditor } from 'app/components/QuillEditor/QuillEditor';
 import { useGlobalDialogContext } from 'app/context/GlobalDialogContext';
 import { useGlobalSnackbar } from 'app/context/GlobalSnackbarContext';
 import { AppRoute } from 'app/routes';
@@ -23,6 +24,7 @@ export const ModNewsCreateEditPage = (props: { mode: EditMode }) => {
 
   const [isNewsLoading, setNewsLoading] = useState<boolean>(true);
   const [news, setNews] = useState<News | null>(null);
+  const [newsContent, setNewsContent] = useState('');
 
   const [file, setFile] = useState<File | null>(null);
 
@@ -31,6 +33,7 @@ export const ModNewsCreateEditPage = (props: { mode: EditMode }) => {
       getNewsById(newsId)
         .then(res => {
           setNews(res.data.data);
+          setNewsContent(res.data.data.content);
         })
         .finally(() => {
           setNewsLoading(false);
@@ -60,9 +63,11 @@ export const ModNewsCreateEditPage = (props: { mode: EditMode }) => {
                   newsId!,
                   {
                     title: data.title,
-                    content: data.content,
+                    //content: data.content,
+                    content: newsContent,
                     type: NewsType.General,
-                    contentFormat: NewsContentFormat.Plaintext,
+                    //contentFormat: NewsContentFormat.Plaintext,
+                    contentFormat: NewsContentFormat.Delta,
                   },
                   file,
                 );
@@ -70,9 +75,11 @@ export const ModNewsCreateEditPage = (props: { mode: EditMode }) => {
                 await createNews(
                   {
                     title: data.title,
-                    content: data.content,
+                    //content: data.content,
+                    content: newsContent,
                     type: NewsType.General,
-                    contentFormat: NewsContentFormat.Plaintext,
+                    // contentFormat: NewsContentFormat.Plaintext,
+                    contentFormat: NewsContentFormat.Delta,
                   },
                   file,
                 );
@@ -104,7 +111,7 @@ export const ModNewsCreateEditPage = (props: { mode: EditMode }) => {
             sx={{ my: 2 }}
             required
           />
-          <TextFieldElement
+          {/* <TextFieldElement
             fullWidth
             name="content"
             label="Content"
@@ -113,6 +120,16 @@ export const ModNewsCreateEditPage = (props: { mode: EditMode }) => {
             sx={{ my: 2 }}
             inputProps={{ maxLength: 3000 }}
             required
+          /> */}
+          <Typography sx={{ mb: 1 }}>Content</Typography>
+          <QuillEditor
+            style={{
+              height: 245 + 'px',
+            }}
+            value={newsContent}
+            onChange={content => {
+              setNewsContent(content);
+            }}
           />
           {/* <Typography variant={'h6'} sx={{ mt: 4 }}>
             Publishing status

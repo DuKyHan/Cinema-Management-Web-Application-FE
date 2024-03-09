@@ -12,10 +12,11 @@ import { useGlobalDialogContext } from 'app/context/GlobalDialogContext';
 import { useGlobalSnackbar } from 'app/context/GlobalSnackbarContext';
 import { AppRoute, replaceRouteParams } from 'app/routes';
 import { deleteNews, getNews } from 'app/services/news';
+import parse from 'html-react-parser';
 import _ from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { News, NewsStatus } from 'types/news';
+import { News, NewsContentFormat, NewsStatus } from 'types/news';
 
 export const ModNewsListPage = () => {
   const navigate = useNavigate();
@@ -102,6 +103,26 @@ export const ModNewsListPage = () => {
             field: 'content',
             headerName: 'Content',
             width: 500,
+            // valueGetter: params => {
+            //   // Remove html tags
+            //   if (params.row.contentFormat === NewsContentFormat.Delta) {
+            //     return parse(params.row.content);
+            //   }
+
+            //   return params.row.content;
+            // },
+            renderCell: params => {
+              if (params.row.contentFormat === NewsContentFormat.Delta) {
+                return (
+                  <Box overflow={'hidden'}>{parse(params.row.content)}</Box>
+                );
+              }
+              return (
+                <Typography variant="body2" color="text.secondary">
+                  {params.row.content}
+                </Typography>
+              );
+            },
           },
           {
             field: 'status',
