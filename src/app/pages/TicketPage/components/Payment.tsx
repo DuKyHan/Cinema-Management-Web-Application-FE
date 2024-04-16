@@ -13,6 +13,7 @@ import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { useGlobalDialogContext } from 'app/context/GlobalDialogContext';
 import { CinemaFilm } from 'types/cinema-film';
 import { CinemaFilmPremiere } from 'types/cinema-film-premiere';
+import { PAYPAL_CLIENT_ID } from 'utils/config';
 import { alphabetNumberFromRowColumn } from 'utils/general';
 import { SeatData } from '..';
 import { AppPaypalButton } from './AppPaypalButton';
@@ -102,8 +103,7 @@ export const Payment = (props: {
             </Typography>
             <PayPalScriptProvider
               options={{
-                clientId:
-                  'ASjA7xtnwCXuCSpkWO_MRPpmXPN9Jiq0m6mIERgzim87pag-rTx3L00s2mIVgo9qAmJcOdZjA3_RuWg-',
+                clientId: PAYPAL_CLIENT_ID,
                 components: 'buttons',
                 currency: 'USD',
                 buyerCountry: 'VN',
